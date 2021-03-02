@@ -61,22 +61,36 @@ export const routes = [
           ],
         },
         {
-          path: "/users",
-          component: Layout,
+          path: "/doc",
+          component: () => import("views/doc/Doc.vue"),
           meta: {
-            title: "用户管理",
+            title: "文档",
             icon: "el-icon-user-solid",
           },
-          redirect: '/users/list',
+          redirect: '/doc/doclist',
           children: [
             {
-              path: "list",
-              component: () => import("views/users/list.vue"),
+              path: "doclist",
+              component: () => import("views/doc/Doclist.vue"),
+              name: "doclist",
+              hidden: true,
               meta: {
-                title: "用户列表",
-                icon: "el-icon-document",
+                title: "文档列表",
+                icon: "el-icon-s-home",
+                activeMenu: "/doc",
               },
-            }
+            },
+            {
+              path: "docDetail/:id(\\d+)",
+              component: () => import("views/doc/Docdetail.vue"),
+              name: "docDetail",
+              hidden: true,
+              meta: {
+                title: "文档详情",
+                icon: "el-icon-s-home",
+                activeMenu: "/doc",
+              },
+            },
           ],
         }
       ],

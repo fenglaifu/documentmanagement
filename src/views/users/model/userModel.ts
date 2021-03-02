@@ -1,5 +1,5 @@
 import { reactive, onMounted, ref } from "vue";
-import request from "../src/utils/request";
+import request from "../../../../src/utils/request";
 
 export function useList() {
   // 列表数据
