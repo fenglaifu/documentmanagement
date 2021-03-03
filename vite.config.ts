@@ -1,7 +1,6 @@
 import path from "path"
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
 export default {
   resolve: {
     alias: {
@@ -14,6 +13,7 @@ export default {
       utils: path.resolve(__dirname, "src/utils"),
       apis: path.resolve(__dirname, "src/apis")
     }
+    
   },
   plugins: [vue()]
 }

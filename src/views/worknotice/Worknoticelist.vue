@@ -1,17 +1,39 @@
 <template>
     <div class="app-container">
-       <el-button
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleView()"
-                >工作通知详情</el-button
+       <el-table
+        v-loading="loading"
+        :data="list"
+        border
+        fit=false
+        stripe
+        highlight-current-row
+        style="width: 100%"
+        
+      >
+        <el-table-column align="center" label="ID" prop="id"></el-table-column>
+        <el-table-column align="center" label="标题" prop="title">
+        </el-table-column>
+        <el-table-column align="center" label="通知内容" prop="content">
+        </el-table-column>
+        <el-table-column align="center" label="日期" prop="createDate">
+        </el-table-column>
+        <!-- 操作列 -->
+        <el-table-column label="操作" align="center">
+          <template v-slot="scope">
+            <el-button
+              type="primary"
+              @click="handleView(scope)"
+              >内容详情</el-button
             >
+          </template>
+        </el-table-column>
+      </el-table>
       <!-- 分页 -->
       <pagination
         v-show="total > 0"
         :total="total"
-        v-model:page="listQuery.curPage"
-        v-model:limit="listQuery.pageSize"
+        :page="listQuery.curPage"
+        :limit="listQuery.pageSize"
         @pagination="getDataList"
       ></pagination>  
     </div>
@@ -33,13 +55,12 @@ export default {
     const {state, getDataList} = WorkNoticeModelData();
 
     // 查看详情
-    function handleView() {
+    function handleView({row}) {
       router.push({
         name: "noticeDetail",
-        params: { id: 1 },
+        params: { id: row.id },
       });
     }
-
 
     return {
       ...toRefs(state),
