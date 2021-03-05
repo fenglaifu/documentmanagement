@@ -1,7 +1,19 @@
 <template>
     <div>
-        <router-link to="/home/1">detail1</router-link>
-        <router-link to="/home/2">detail2</router-link>
+        <el-row :gutter="12">
+            <el-col :span="8">
+                <el-card shadow="always">
+                <router-link to="/worknotice/worknoticelist">工作通知</router-link>
+                </el-card>
+            </el-col>
+            <el-col :span="8">
+                <el-card shadow="always">
+                <router-link to="/doc/doclist">文档</router-link>
+                </el-card>
+            </el-col>
+        </el-row>
+        
+        
         <router-view></router-view>
     </div>
 </template>
