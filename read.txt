@@ -1,0 +1,22 @@
+´´½¨DB: create database docmanagement
+
+
+CREATE TABLE IF NOT EXISTS doc_file_t(
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	parent_id INT(11) NOT NULL,
+	file_name VARCHAR(45) DEFAULT NULL,
+	file_path DATE DEFAULT NULL,
+	create_date DATE DEFAULT NULL,
+	is_dir INT(1) DEFAULT 0,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS work_notice_t(
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	title VARCHAR(45) DEFAULT NULL,
+	content BLOB DEFAULT NULL,
+	create_date DATE DEFAULT NULL,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+Æô¶¯service£ºjava -jar docmanagement.jar --spring.config.location=./config/application.yml
