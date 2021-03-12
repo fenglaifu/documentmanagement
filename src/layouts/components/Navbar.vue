@@ -14,9 +14,6 @@
           <router-link to="/">
             <el-dropdown-item> 首页 </el-dropdown-item>
           </router-link>
-          <a href="javascript:void();">
-            <el-dropdown-item>我的</el-dropdown-item>
-          </a>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

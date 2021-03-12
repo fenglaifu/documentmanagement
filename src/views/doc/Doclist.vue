@@ -24,6 +24,7 @@
         :limit="listQuery.pageSize"
         @pagination="getDataList"
       ></pagination> 
+      <span @click="handleView">查看详情</span>
     </div>
 </template>
 
@@ -43,7 +44,7 @@ export default {
     const router = useRouter();
     const {state, getDataList} = DocModelData();
     // 查看详情
-    function handleView({row}) {
+    function handleView() {
       router.push({
         name: "docDetail",
         params: { id: 1 },

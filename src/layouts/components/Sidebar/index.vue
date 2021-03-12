@@ -1,4 +1,5 @@
 <template>
+<el-aside :width="store.state.sideBarWidth" class="menuleft">
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :default-active="activeMenu"
@@ -16,11 +17,16 @@
       />
     </el-menu>
   </el-scrollbar>
+  <div class="toggleButton" @click="togleCollapse">
+    <i :class="store.state.sideBarArrow"></i>
+  </div>
+</el-aside>
 </template>
 
 <script setup>
+import store from '../../../../src/store'
 import SidebarItem from "./SidebarItem.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { routes } from "/@/router";
 import variables from "styles/variables.module.scss";
@@ -33,5 +39,42 @@ const activeMenu = computed(() => {
   }
   return path;
 });
+
+/* let isCollapse = ref(false); */
+const togleCollapse = () =>{
+  console.log('togleCollapse')
+  /* isCollapse.value = !isCollapse.value; */
+  store.state.isCollapse = !store.state.isCollapse;
+  if(store.state.isCollapse){
+    store.state.sideBarWidth = store.state.sideBarWidthFolded;
+    store.state.sideBarArrow = store.state.sideBarArrowRight;
+  }
+  else{
+    store.state.sideBarWidth = store.state.sideBarWidthExpand;
+    store.state.sideBarArrow = store.state.sideBarArrowLeft;
+  }
+  console.log('store.state.sideBarWidth: ' + store.state.sideBarWidth)
+}
 </script>
+<style scoped>
+  .menuleft{
+      width: 210px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  #app .sidebar-container .el-scrollbar {
+        border-right: 1px solid #535a53;
+        width: 100%;
+  }
+  .toggleButton{
+    font-size: 30px;
+    width: 14px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -1px;
+  }
+</style>
 

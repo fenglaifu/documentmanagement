@@ -32,7 +32,7 @@ export const routes = [
           component: () => import("views/worknotice/worknotice.vue"),
           meta: {
             title: "工作通知",
-            icon: "el-icon-user-solid",
+            icon: "el-icon-notebook-1",
           },
           redirect: '/worknotice/worknoticelist',
           children: [
@@ -43,7 +43,7 @@ export const routes = [
               hidden: true,
               meta: {
                 title: "工作通知列表",
-                icon: "el-icon-s-home",
+                icon: "el-icon-notebook-1",
                 activeMenu: "/worknotice",
               },
             },
@@ -54,7 +54,7 @@ export const routes = [
               hidden: true,
               meta: {
                 title: "工作通知详情",
-                icon: "el-icon-s-home",
+                icon: "el-icon-notebook-1",
                 activeMenu: "/worknotice",
               },
             },
@@ -65,7 +65,7 @@ export const routes = [
           component: () => import("views/doc/Doc.vue"),
           meta: {
             title: "文档",
-            icon: "el-icon-user-solid",
+            icon: "el-icon-files",
           },
           redirect: '/doc/doclist',
           children: [
@@ -76,7 +76,7 @@ export const routes = [
               hidden: true,
               meta: {
                 title: "文档列表",
-                icon: "el-icon-s-home",
+                icon: "el-icon-folder-opened",
                 activeMenu: "/doc",
               },
             },
@@ -87,7 +87,7 @@ export const routes = [
               hidden: true,
               meta: {
                 title: "文档详情",
-                icon: "el-icon-s-home",
+                icon: "el-icon-folder-opened",
                 activeMenu: "/doc",
               },
             },

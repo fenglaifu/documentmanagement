@@ -9,8 +9,7 @@
 
   .sidebar-container {
     transition: width 0.28s;
-    width: $sideBarWidth !important;
-    background-color: $menuBg;
+    width: $sideBarWidth;
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -35,6 +34,7 @@
 
     .el-scrollbar {
       height: 100%;
+      background-color: $menuBg;
     }
 
     &.has-logo {
