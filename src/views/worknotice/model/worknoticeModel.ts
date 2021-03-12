@@ -16,14 +16,14 @@ export function WorkNoticeModelData() {
 
     const getDataList = () => {
         state.loading = true;
-        let url = `/workNotice/getDataList/${state.listQuery.curPage}/${state.listQuery.pageSize}`;
+        let url = `/workNotice/${state.listQuery.curPage}/${state.listQuery.pageSize}`;
         return request({
                 url: url,
                 method: "get"
             })
             .then(response => {
                 console.log(response);
-                state.list = response.data.data;
+                state.list = response.data.list;
                 state.total = response.data.total;
             })
             .finally(() => {

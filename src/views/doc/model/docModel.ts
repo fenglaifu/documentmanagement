@@ -11,18 +11,19 @@ export function DocModelData() {
             curPage: 1,
             pageSize: 10,
         },
+        dirFilePath: '',
         defaultProps: {
             label: "label",
             children: "children"
         }
     });
 
-    const getDataList = () => {
+    const getPageDataList = () => {
         state.loading = true;
+        let url = `/docFile/${state.listQuery.curPage}/${state.listQuery.pageSize}`;
         return request({
-                url: "/doc/doclist",
-                method: "get",
-                params: state.listQuery
+                url: url,
+                method: "get"
             })
             .then(response => {
                 console.log(response);
@@ -33,6 +34,38 @@ export function DocModelData() {
                 state.loading = false;
             });
     }
-    getDataList();
-    return {state, getDataList}
+    
+    const getAllDataList = () => {
+        state.loading = true;
+        return request({
+                url: "/docFile/getAllData",
+                method: "get"
+            })
+            .then(response => {
+                console.log(response);
+                state.dataList = response.data.data;
+                state.total = response.data.total;
+            })
+            .finally(() => {
+                state.loading = false;
+            });
+    }
+    getAllDataList();
+
+    const getDirPathDataList = () => {
+        state.loading = true;
+        return request({
+                url: "/getAllData/dirPath",
+                method: "get",
+                params: state.dirFilePath
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .finally(() => {
+                state.loading = false;
+            });
+    }
+
+    return {state, getAllDataList, getPageDataList, getDirPathDataList}
 }
