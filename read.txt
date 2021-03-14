@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS doc_file_t(
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	parent_id INT(11) NOT NULL,
 	file_name VARCHAR(45) CHARACTER SET utf8,
+	new_file_name VARCHAR(45) CHARACTER SET utf8,
 	file_path VARCHAR(45) CHARACTER SET utf8,
 	create_date DATE DEFAULT NULL,
 	is_dir INT(1) DEFAULT 0,
