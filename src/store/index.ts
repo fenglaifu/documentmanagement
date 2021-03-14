@@ -9,7 +9,9 @@ const store = createStore({
       sideBarWidthExpand : '210px',
       sideBarArrow: 'el-icon-caret-left',
       sideBarArrowLeft: 'el-icon-caret-left',
-      sideBarArrowRight: 'el-icon-caret-right'
+      sideBarArrowRight: 'el-icon-caret-right',
+      dirFileDataList: [],
+      selectedFileData: {}
     },
   });
   

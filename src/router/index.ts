@@ -48,9 +48,20 @@ export const routes = [
               },
             },
             {
-              path: "noticeDetail/:id(\\d+)",
+              path: "worknoticeAdd",
+              component: () => import("views/worknotice/WorknoticeAdd.vue"),
+              name: "worknoticeAdd",
+              hidden: true,
+              meta: {
+                title: "新增工作通知",
+                icon: "el-icon-notebook-1",
+                activeMenu: "/worknotice",
+              },
+            },
+            {
+              path: "worknoticedetail/:id(\\d+)",
               component: () => import("views/worknotice/worknoticedetail.vue"),
-              name: "noticeDetail",
+              name: "worknoticedetail",
               hidden: true,
               meta: {
                 title: "工作通知详情",
@@ -81,9 +92,9 @@ export const routes = [
               },
             },
             {
-              path: "docDetail/:id(\\d+)",
+              path: "docdetail/:id",
               component: () => import("views/doc/Docdetail.vue"),
-              name: "docDetail",
+              name: "docdetail",
               hidden: true,
               meta: {
                 title: "文档详情",
@@ -91,6 +102,39 @@ export const routes = [
                 activeMenu: "/doc",
               },
             },
+            {
+              path: "docdetailPdf/:id",
+              component: () => import("views/doc/DocdetailPdf.vue"),
+              name: "docdetailPdf",
+              hidden: true,
+              meta: {
+                title: "文档详情",
+                icon: "el-icon-folder-opened",
+                activeMenu: "/doc",
+              },
+            },
+            {
+              path: "docdetailXlsx/:id",
+              component: () => import("views/doc/DocdetailXlsx.vue"),
+              name: "docdetailXlsx",
+              hidden: true,
+              meta: {
+                title: "文档详情",
+                icon: "el-icon-folder-opened",
+                activeMenu: "/doc",
+              },
+            },
+            {
+              path: "docdetailDocx/:id",
+              component: () => import("views/doc/DocdetailDocx.vue"),
+              name: "docdetailDocx",
+              hidden: true,
+              meta: {
+                title: "文档详情",
+                icon: "el-icon-folder-opened",
+                activeMenu: "/doc",
+              },
+            }
           ],
         }
       ],

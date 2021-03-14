@@ -22,7 +22,7 @@ export default {
             designer = wb;
             workbook = designer.getWorkbook();
             const service = axios.create({
-                baseURL: "http://localhost:4000/api",
+                baseURL: "http://localhost:5000/api",
                 timeout: 5000
             });
         /* service.get('/loadExcel/1').then(result => {
@@ -41,7 +41,7 @@ export default {
             console.log("error")
             console.log(error)
         }) */
-        service.get('/loadExcels/as').then(result => {
+        /* service.get('/loadExcels/as').then(result => {
             console.log(result)
             let blobdata = new Blob([result.data], { type: "application/vnd.oasis.opendocument.spreadsheet;charset=utf-8" });
             let excelIO = new GC.Spread.Excel.IO();
@@ -58,7 +58,7 @@ export default {
         }).catch(error => {
             console.log("error")
             console.log(error)
-        })
+        }) */
 
             /* let excelIO = new GC.Spread.Excel.IO();
             let excelFile = '/public/OA系统人员信息.xls';

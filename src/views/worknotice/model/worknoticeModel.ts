@@ -12,6 +12,9 @@ export function WorkNoticeModelData() {
             curPage: 1,
             pageSize: 10,
         },
+        modelData: {
+
+        }
     });
 
     const getDataList = () => {
@@ -41,6 +44,8 @@ export function WorkNoticeModelData() {
             })
             .then(response => {
                 console.log(response);
+                modelData = ref(Object.assign({},response.data));
+                state.modelData = Object.assign({},response.data);
             })
             .finally(() => {
                 state.loading = false;
@@ -62,13 +67,13 @@ export function WorkNoticeModelData() {
             });
     }
 
-    const saveNotice = (notice: WorkNotice) => {
+    const saveNotice = (notice: any) => {
         state.loading = true;
         let url = `/workNotice`;
         return request({
                 url: url,
                 method: "POST",
-                data: notice
+                data: notice.value
             })
             .then(response => {
                 console.log(response);
@@ -78,5 +83,12 @@ export function WorkNoticeModelData() {
             });
     }
 
-    return {state, getDataList, getDetail, deleteNotice, saveNotice}
+    let modelData = ref(Object.assign({}, {
+        id: undefined,
+        title : undefined,
+        content : undefined,
+        createDate : undefined
+    }));
+
+    return {state, getDataList, getDetail, deleteNotice, saveNotice, modelData}
 }

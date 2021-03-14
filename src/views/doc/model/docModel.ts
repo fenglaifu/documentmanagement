@@ -1,5 +1,6 @@
 import { reactive, onMounted, ref } from "vue";
 import request from "../../../../src/utils/request";
+import store from "../../../store"
 
 export function DocModelData() {
 
@@ -13,8 +14,9 @@ export function DocModelData() {
         },
         dirFilePath: '',
         defaultProps: {
-            label: "label",
-            children: "children"
+            label: "fileName",
+            children: "children",
+            isLeaf: 'leaf'
         }
     });
 
@@ -42,15 +44,17 @@ export function DocModelData() {
                 method: "get"
             })
             .then(response => {
+                console.log('getAllDataList()');
                 console.log(response);
-                state.dataList = response.data.data;
-                state.total = response.data.total;
+                state.dataList = response.data;
+                // state.total = response.data.total;
+                store.state.dirFileDataList = response.data;
             })
             .finally(() => {
                 state.loading = false;
             });
     }
-    getAllDataList();
+    
 
     const getDirPathDataList = () => {
         state.loading = true;
@@ -67,5 +71,22 @@ export function DocModelData() {
             });
     }
 
-    return {state, getAllDataList, getPageDataList, getDirPathDataList}
+    const download = (filePath: String) => {
+        /* return request({
+            url: "/downloadFile",
+            method: "get",
+            params: {'filePath': filePath}
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log('download');
+            console.log(error);
+        }); */
+        window.location.href = request.defaults.baseURL + "/downloadFile?filePath=" + filePath;
+
+    }
+
+    return {state, getAllDataList, getPageDataList, getDirPathDataList, download}
 }

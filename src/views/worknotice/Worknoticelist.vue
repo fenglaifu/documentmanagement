@@ -1,5 +1,11 @@
 <template>
     <div class="app-container">
+      <div class="btn-container">
+        <!-- 新增按钮 -->
+        <router-link to="/worknotice/worknoticeAdd">
+          <el-button type="success" icon="el-icon-edit">新增</el-button>
+        </router-link>
+      </div>
        <el-table
         v-loading="loading"
         :data="list"
@@ -8,9 +14,8 @@
         stripe
         highlight-current-row
         style="width: 100%"
-        
       >
-        <el-table-column align="center" label="ID" prop="id"></el-table-column>
+        <!-- <el-table-column align="center" label="ID" prop="id"></el-table-column> -->
         <el-table-column align="center" label="标题" prop="title">
         </el-table-column>
         <el-table-column align="center" label="通知内容" prop="content">
@@ -57,7 +62,7 @@ export default {
     // 查看详情
     function handleView({row}) {
       router.push({
-        name: "noticeDetail",
+        name: "worknoticedetail",
         params: { id: row.id },
       });
     }
@@ -72,5 +77,8 @@ export default {
 </script>
 
 <style scoped>
-
+.btn-container {
+  text-align: left;
+  padding: 0px 10px 20px 0px;
+}
 </style>

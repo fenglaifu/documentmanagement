@@ -5,7 +5,7 @@ import store from "../../src/store";
 
 const service = axios.create({
   baseURL: "http://localhost:5000/api",
-  timeout: 5000
+  timeout: 360000
 });
 
 service.interceptors.request.use(

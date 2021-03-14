@@ -1,0 +1,52 @@
+<template>
+    <div>
+        
+        <div class="btn-container">
+            <el-button type="success" icon="el-icon-edit" @click="downloadFile">下载</el-button>
+            <div>{{fileName}}</div>
+        </div>
+        <pdf-component></pdf-component>
+    </div>
+</template>
+
+<script>
+import PdfComponent from '../../components/PdfComponent.vue';
+import { useRouter } from "vue-router";
+import { toRefs, watchEffect } from "vue";
+import { DocModelData } from './model/docModel';
+import store from "../../store";
+export default {
+    name: 'docdetailPdf',
+    components: {
+        PdfComponent
+    },
+    setup(){
+        const {state, getPageDataList, getAllDataList, download} = DocModelData();
+        const router = useRouter();
+        let selectedFileData = store.state.selectedFileData;
+        watchEffect(() => {
+            console.log('watchEffect')
+            selectedFileData = store.state.selectedFileData;
+            console.log(selectedFileData.fileName)
+        })
+
+        const downloadFile = () => {
+            download(null);
+        }
+        return {
+            ...toRefs(state),
+            download, 
+            router,
+            ...toRefs(selectedFileData),
+            downloadFile
+        }
+    }
+}
+</script>
+
+<style scoped>
+.btn-container {
+  text-align: left;
+  padding: 0px 10px 20px 0px;
+}
+</style>

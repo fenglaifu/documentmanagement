@@ -1,17 +1,30 @@
 <template>
     <div class="app-container">
-        
+        {{filePath}}
         <!-- <pdf src="/public/大型互联网分布式系统架构演进之路.pdf"></pdf> -->
-        <iframe class="iframe" src="/public/pdf/web/viewer.html?file=/public/大型互联网分布式系统架构演进之路.pdf"></iframe>
+        <iframe class="iframe" :src="filePreview"></iframe>
     </div>
 </template>
 
 <script>
 /* import pdf from 'vue-pdf'; */
+import store from '../store'
+import request from '../utils/request'
+import { toRefs } from "vue";
 export default {
     /* components: {
         pdf
     } */
+    setup() {
+        let selectedFileData = store.state.selectedFileData;
+        let filePreview = '/public/pdf/web/viewer.html?file=' + encodeURIComponent(request.defaults.baseURL + "/preview?filePath=" + selectedFileData.filePath);
+        window.open(request.defaults.baseURL + "/preview?filePath=" + selectedFileData.filePath);
+        console.log(filePreview)
+        return {
+            ...toRefs(selectedFileData),
+            filePreview
+        }
+    }
 }
 </script>
 
