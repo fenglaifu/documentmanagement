@@ -4,6 +4,8 @@ import store from "../../../store"
 
 export function DocModelData() {
 
+    const baseURL = request.defaults.baseURL;
+
     const state = reactive({
         loading: true, // 加载状态
         dataList: [], // 列表数据
@@ -84,9 +86,47 @@ export function DocModelData() {
             console.log('download');
             console.log(error);
         }); */
-        window.location.href = request.defaults.baseURL + "/downloadFile?filePath=" + filePath;
+        window.location.href = baseURL + "/downloadFile?filePath=" + filePath;
 
     }
 
-    return {state, getAllDataList, getPageDataList, getDirPathDataList, download}
+    const uploadMulti = (filePath:any) => {
+        return request({
+            url: "/uploadMulti",
+            method: "post",
+            data: {'filePath': filePath},
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        .then(response => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log('uploadMulti');
+            console.log(error);
+        });
+    }
+    const uploadSingle = (filePath:any) => {
+        return request({
+            url: "/uploadSingle",
+            method: "post",
+            data: filePath,
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        .then(response => {
+            console.log(response);
+            if(response.data === 'success'){
+                getAllDataList();
+            }
+        })
+        .catch((error) => {
+            console.log('uploadSingle');
+            console.log(error);
+        });
+    }
+
+    return {state, getAllDataList, getPageDataList, getDirPathDataList, download, uploadMulti, uploadSingle, baseURL}
 }

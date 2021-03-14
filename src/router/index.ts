@@ -92,6 +92,17 @@ export const routes = [
               },
             },
             {
+              path: "docUpload",
+              component: () => import("views/doc/DocUpload.vue"),
+              name: "docUpload",
+              hidden: true,
+              meta: {
+                title: "文档上传",
+                icon: "el-icon-folder-opened",
+                activeMenu: "/doc",
+              },
+            },
+            {
               path: "docdetail/:id",
               component: () => import("views/doc/Docdetail.vue"),
               name: "docdetail",

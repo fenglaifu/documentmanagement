@@ -1,12 +1,10 @@
 <template>
     <div class="app-container">
       <div class="btn-container">
-            <el-button type="success" icon="el-icon-edit" @click="uploadFile">上传</el-button>
-            <div>{{fileName}}</div>
+            <el-button type="success" icon="el-icon-edit" @click="uploadFile">
+              <router-link to="/doc/docUpload">上传文档</router-link>
+            </el-button>
       </div>
-      <el-upload  :action="uploadFile"  :on-success="UploadSuccess" :file-list="fileList">
-          <el-button size="small" type="primary" >点击上传</el-button>
-      </el-upload>
 
       <el-tree    
       :props="defaultProps"
@@ -81,17 +79,12 @@ export default {
         }
     }
 
-    const uploadFile = () => {
-
-    }
-
 
     return {
       ...toRefs(state),
       getPageDataList,
       dataTreeList,
-      handleNodeClick,
-      uploadFile
+      handleNodeClick
     };
   },
 };
