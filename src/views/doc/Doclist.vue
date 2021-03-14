@@ -59,7 +59,7 @@ export default {
         }
         store.state.selectedFileData = data;
         if(data.fileName){
-          const suffix = data.fileName.substring(data.fileName.indexOf('.') + 1).toLowerCase();
+          const suffix = data.fileName.substring(data.fileName.lastIndexOf('.') + 1).toLowerCase();
           if(suffix === 'pdf'){
             router.push({ name: "docdetailPdf", params: { id:  data.id}});
             return;
