@@ -11,7 +11,8 @@ const store = createStore({
       sideBarArrowLeft: 'el-icon-caret-left',
       sideBarArrowRight: 'el-icon-caret-right',
       dirFileDataList: [],
-      selectedFileData: {}
+      selectedFileData: {},
+      dirTreeDatalist: []
     },
   });
   

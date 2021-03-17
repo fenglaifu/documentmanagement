@@ -2,7 +2,7 @@
     <div>
         
         <div class="btn-container">
-            <el-button type="success" icon="el-icon-edit" @click="downloadFile">下载</el-button>
+            <el-button type="success" icon="el-icon-download" @click="downloadFile">下载</el-button>
             <div>{{fileName}}</div>
         </div>
         <pdf-component></pdf-component>
@@ -11,7 +11,7 @@
 
 <script>
 import PdfComponent from '../../components/PdfComponent.vue';
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { toRefs, watchEffect } from "vue";
 import { DocModelData } from './model/docModel';
 import store from "../../store";
@@ -23,6 +23,7 @@ export default {
     setup(){
         const {state, getPageDataList, getAllDataList, download} = DocModelData();
         const router = useRouter();
+        const route = useRoute();
         let selectedFileData = store.state.selectedFileData;
         watchEffect(() => {
             console.log('watchEffect')
@@ -31,7 +32,7 @@ export default {
         })
 
         const downloadFile = () => {
-            download(null);
+            download(route.params.id);
         }
         return {
             ...toRefs(state),

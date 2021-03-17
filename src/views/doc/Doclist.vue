@@ -1,9 +1,9 @@
 <template>
     <div class="app-container">
       <div class="btn-container">
-            <el-button type="success" icon="el-icon-edit" @click="uploadFile">
-              <router-link to="/doc/docUpload">上传文档</router-link>
-            </el-button>
+            <router-link to="/doc/docUpload">
+              <el-button type="success" icon="el-icon-upload2">上传文档</el-button>
+            </router-link>
       </div>
 
       <el-tree    
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, watchEffect } from "vue";
+import { toRefs, reactive, watchEffect, onBeforeMount, onMounted, onUpdated } from "vue";
 import { useRouter } from "vue-router";
 import Pagination from '../../../src/components/Pagination.vue';
 import { DocModelData } from './model/docModel';
@@ -31,15 +31,42 @@ export default {
     Pagination,
   },
   setup() {
-        
-    let dataTreeList: any[] = [];
+    let dataTreeList: any[] = reactive([]);
     const router = useRouter();
-    const {state, getPageDataList, getAllDataList, download} = DocModelData();
-    getAllDataList();
+    const {state, getPageDataList, getAllDataList, download, getAllDirTreeList} = DocModelData();
+
+    /* onUpdated(()=>{
+      dataTreeList = store.state.dirFileDataList;
+      console.log('onUpdated')
+    });
+
+    onBeforeMount(async ()=>{
+      await getAllDataList();
+      watchEffect(()=>{
+        if(store.state.dirFileDataList && store.state.dirFileDataList.length > 0){
+          dataTreeList = store.state.dirFileDataList;
+          console.log('onBeforeMount watchEffect dataTreeList')
+          console.log(dataTreeList)
+          console.log('onBeforeMount watchEffect dataTreeList end')
+        }
+        
+      });
+      console.log('onBeforeMount')
+    })  
+    onMounted(async ()=>{
+      await getAllDataList();
+      if(store.state.dirFileDataList && store.state.dirFileDataList.length > 0){
+        dataTreeList = store.state.dirFileDataList;
+        console.log('onMounted')
+      }
+      
+      console.log('onMounted end')
+    })  */
+    
     watchEffect(() => {
       console.log('watchEffect')
       if(store.state.dirFileDataList && store.state.dirFileDataList.length > 0){
-        dataTreeList = store.state.dirFileDataList;
+        dataTreeList = store.state.dirFileDataList;console.log('watchEffect value')
         /* store.state.dirFileDataList.forEach((item,idx) => {
           dataTreeList.push(item);
           console.log(dataTreeList)
@@ -49,7 +76,7 @@ export default {
           console.log(dataTreeList)
       console.log('watchEffect end')
     })
-
+    
     const handleNodeClick = (data:any, Node:any, element:any) => {
         console.log(data);
         console.log(Node);
@@ -66,6 +93,10 @@ export default {
           }
           else if(suffix === 'doc' || suffix === 'docx'){
             router.push({ name: "docdetailDocx", params: { id:  data.id}});
+            return;
+          }
+          else if(suffix === 'pptx'){
+            router.push({ name: "docdetailPpt", params: { id:  data.id}});
             return;
           }
           else if(suffix === 'xls' || suffix === 'xlsx'){

@@ -7,6 +7,7 @@
 <script>
 import mammoth from 'mammoth';
 import {convertToHtml} from "mammoth";
+import { useRoute } from "vue-router";
 import axios from "axios";
 export default {
     name: 'Word',

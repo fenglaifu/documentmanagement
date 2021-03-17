@@ -7,7 +7,7 @@ export function WorkNoticeModelData() {
     const state = reactive({
         loading: true, // 加载状态
         list: [], // 列表数据
-        total: 20,
+        total: 0,
         listQuery: {
             curPage: 1,
             pageSize: 10,

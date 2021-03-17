@@ -5,6 +5,7 @@
             multiple
             :on-change="onUploadChange"
             :http-request="uploadFile"
+            :before-upload="beforeUpload"
             :show-file-list="true">
             <el-button slot="trigger" size="small" type="primary">选取</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
@@ -12,10 +13,10 @@
 
         <el-row>
           <el-col>
-              上传目录:{{parentId}}
-          </el-col>
-          <el-col>
-              <div><el-input type="text" v-model="filePath" placeholder=""></el-input></div>
+              <div class="dir-div">
+              <div class="dir-label">上传目录:</div>
+                <el-input class="dir-input" type="text" v-model="filePath" placeholder=""></el-input>
+              </div>
               <el-tree    
                     :props="defaultProps"
                     :data="dataTreeList"
@@ -37,8 +38,8 @@ export default {
     name: 'docUpload',
     emits: ['uploadFile'],
     setup(prop, { emit }){
-        const {state, getAllDataList, uploadSingle, uploadMulti, baseURL} = DocModelData();
-        getAllDataList();
+        const {state, getAllDataList, uploadSingle, uploadMulti, baseURL, getAllDirTreeList} = DocModelData();
+        getAllDirTreeList();
         let actionUrl = baseURL + '/uploadSingle';
         let dataTreeList: any[] = [];
         const removeData = (data: any[]) => {
@@ -61,13 +62,13 @@ export default {
 
         watchEffect(() => {
             console.log('watchEffect')
-            if(store.state.dirFileDataList && store.state.dirFileDataList.length > 0){
+            if(store.state.dirTreeDatalist && store.state.dirTreeDatalist.length > 0){
                 // dataTreeList = store.state.dirFileDataList;
                 /* store.state.dirFileDataList.forEach((item,idx) => {
                 dataTreeList.push(item);
                 console.log(dataTreeList)
                 }); */
-                dataTreeList = removeData(Object.assign([], store.state.dirFileDataList));
+                dataTreeList = removeData(Object.assign([], store.state.dirTreeDatalist));
                 console.log(dataTreeList)
                 console.log('new dataTreeList')
             }
@@ -114,10 +115,24 @@ export default {
         const handleNodeClick = (data:any, Node:any, element:any) => {
             console.log(data)
             if(data.isDir){
-                filePath.value = data.filePath;
+                if(data.parentId > 0){
+                    filePath.value = data.filePath + '/' + data.fileName;
+                }
+                else {
+                    filePath.value = data.filePath;
+                }
                 parentId.value = data.id;
             }
             
+        }
+
+        const beforeUpload = (file) => {
+            if(filePath.value == undefined || filePath.value == '' || filePath.value ==null){
+                console.log('.value')
+                return false;
+            }
+            console.log('true')
+            return true;
         }
         return {
             ...toRefs(state),
@@ -131,6 +146,7 @@ export default {
             submitUpload,
             dataTreeList,
             handleNodeClick,
+            beforeUpload,
             filePath,
             parentId
         }
@@ -142,5 +158,16 @@ export default {
 .btn-container {
   text-align: left;
   padding: 0px 10px 20px 0px;
+}
+.el-row{
+    margin-top: 20px;
+}
+.dir-div{
+    width:  100%;
+    display: flex;
+    align-items: center;
+}
+.dir-label{
+    width:  100px;
 }
 </style>

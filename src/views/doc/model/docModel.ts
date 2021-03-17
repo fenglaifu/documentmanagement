@@ -9,7 +9,7 @@ export function DocModelData() {
     const state = reactive({
         loading: true, // 加载状态
         dataList: [], // 列表数据
-        total: 20,
+        total: 0,
         listQuery: {
             curPage: 1,
             pageSize: 10,
@@ -42,7 +42,7 @@ export function DocModelData() {
     const getAllDataList = () => {
         state.loading = true;
         return request({
-                url: "/docFile/getAllData",
+                url: "/docFile/getAllDirFile",
                 method: "get"
             })
             .then(response => {
@@ -73,7 +73,7 @@ export function DocModelData() {
             });
     }
 
-    const download = (filePath: String) => {
+    const download = (id: number) => {
         /* return request({
             url: "/downloadFile",
             method: "get",
@@ -86,7 +86,7 @@ export function DocModelData() {
             console.log('download');
             console.log(error);
         }); */
-        window.location.href = baseURL + "/downloadFile?filePath=" + filePath;
+        window.location.href = baseURL + "/download/" + id;
 
     }
 
@@ -128,5 +128,21 @@ export function DocModelData() {
         });
     }
 
-    return {state, getAllDataList, getPageDataList, getDirPathDataList, download, uploadMulti, uploadSingle, baseURL}
+    /**所有目录树结构 */
+    const getAllDirTreeList = () => {
+        return request({
+            url: "/docFile/getAllDirTree",
+            method: "get"
+        })
+        .then(response => {
+            console.log(response);
+            store.state.dirTreeDatalist = response.data;
+        })
+        .catch(error => {
+            console.log('getAllDirTreeList error');
+            console.log(error);
+        });
+    }
+
+    return {state, getAllDataList, getPageDataList, getDirPathDataList, download, uploadMulti, uploadSingle, baseURL, getAllDirTreeList}
 }

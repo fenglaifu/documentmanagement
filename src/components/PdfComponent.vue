@@ -11,14 +11,16 @@
 import store from '../store'
 import request from '../utils/request'
 import { toRefs } from "vue";
+import { useRoute } from "vue-router";
 export default {
     /* components: {
         pdf
     } */
     setup() {
+        const route = useRoute();
         let selectedFileData = store.state.selectedFileData;
-        let filePreview = '/public/pdf/web/viewer.html?file=' + encodeURIComponent(request.defaults.baseURL + "/preview?filePath=" + selectedFileData.filePath);
-        window.open(request.defaults.baseURL + "/preview?filePath=" + selectedFileData.filePath);
+        let filePreview = '/public/pdf/web/viewer.html?file=' + encodeURIComponent(request.defaults.baseURL + "/preview/" + route.params.id);
+        // window.open(request.defaults.baseURL + "/preview/" + selectedFileData.id);
         console.log(filePreview)
         return {
             ...toRefs(selectedFileData),

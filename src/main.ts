@@ -11,4 +11,8 @@ import 'element-plus/lib/theme-chalk/index.css'
 // 全局样式
 import "styles/index.scss";
 
+import { DocModelData } from './views/doc/model/docModel'
+const { getAllDataList, getAllDirTreeList} = DocModelData();
+getAllDataList();getAllDirTreeList();
+
 createApp(App).use(router).use(store).use(element3).use(ElementPlus).mount('#app')
