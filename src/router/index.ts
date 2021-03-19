@@ -156,6 +156,17 @@ export const routes = [
                 icon: "el-icon-folder-opened",
                 activeMenu: "/doc",
               },
+            },
+            {
+              path: "docdetailText/:id",
+              component: () => import("views/doc/DocdetailText.vue"),
+              name: "docdetailText",
+              hidden: true,
+              meta: {
+                title: "文档详情",
+                icon: "el-icon-folder-opened",
+                activeMenu: "/doc",
+              },
             }
           ],
         }

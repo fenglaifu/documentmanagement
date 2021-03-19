@@ -1,25 +1,54 @@
 <template>
     <div>
         <div v-html="vHtml" />
+        
     </div>
 </template>
 
 <script>
 import mammoth from 'mammoth';
-import {convertToHtml} from "mammoth";
 import { useRoute } from "vue-router";
-import axios from "axios";
+import { ref, toRefs, watchEffect } from "vue";
+import request from '../utils/request'
+import { DocModelData } from '../../src/views/doc/model/docModel';
+// import Buffer from 'buffer'
 export default {
     name: 'Word',
     setup(){
+        const {previewFile} = DocModelData();
         let vHtml = '11';
-        
-        mammoth.convertToHtml({path: "E:/vue3/gitcodeDocmanagement/documentmanagement/public/20210226_v4.5.15-api doc-ruby stock mgt.docx"})
-        .then(result => {
-            vHtml = result.value; // The generated HTML
-            var messages = result.messages; // Any messages, such as warnings during conversion
+        const route = useRoute();
+        let id = route.params.id;
+        // window.Buffer = Buffer || [];
+        previewFile(id).then(response => {
+            console.log('previewFile response');
+            console.log(response);
+            let blob = new Blob([response.data], { type: "application/octet-stream" });
+            let reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                console.log('reader.onload')
+                if(loadEvent && loadEvent.target){
+                    var arrayBuffer = loadEvent.target.result;
+                
+                    mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                        .then(result => {
+                            vHtml = result.value; // The generated HTML
+                            var messages = result.messages; // Any messages, such as warnings during conversion
+                            console.log('messages')
+                            console.log(messages)
+                        })
+                        .done();
+                }
+                
+            }
+            reader.readAsArrayBuffer(blob);
+            
         })
-        .done();
+        .catch(error => {
+            console.log('getAllDirTreeList error');
+            console.log(error);
+        });
+        
 
         return {
             vHtml

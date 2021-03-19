@@ -103,6 +103,10 @@ export default {
             router.push({ name: "docdetailXlsx", params: { id:  data.id}});
             return;
           }
+          else if(suffix === 'txt'){
+            router.push({ name: "docdetailText", params: { id:  data.id}});
+            return;
+          }
           else {
             router.push({ name: "docdetail", params: { id:  data.id}});
             return;

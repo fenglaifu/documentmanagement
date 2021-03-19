@@ -1,16 +1,19 @@
 <template>
     <div class="app-container">
-        <el-upload
-            :action="actionUrl"
-            multiple
-            :on-change="onUploadChange"
-            :http-request="uploadFile"
-            :before-upload="beforeUpload"
-            :show-file-list="true">
-            <el-button slot="trigger" size="small" type="primary">选取</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
-        </el-upload>
-
+        <el-row>
+            <el-col>
+                <el-upload
+                :action="actionUrl"
+                multiple
+                :auto-upload="true"
+                :on-change="onUploadChange"
+                :http-request="uploadFile"
+                :before-upload="beforeUpload"
+                :show-file-list="true">
+                    <el-button slot="trigger" size="small" type="primary">选取上传</el-button>
+                </el-upload>
+            </el-col>
+        </el-row>
         <el-row>
           <el-col>
               <div class="dir-div">
@@ -33,6 +36,7 @@
 <script lang="ts">
 import { ref, toRefs, watchEffect } from "vue";
 import { DocModelData } from './model/docModel';
+import { Message } from "element3";
 import store from "../../store";
 export default {
     name: 'docUpload',
@@ -94,13 +98,16 @@ export default {
             file_form.append("file", file);
             file_form.append("filePath", filePath.value);
             file_form.append("parentId", parentId.value);
-            uploadSingle(file_form);
+            uploadSingle(file_form).then(result => {
+                Message({
+                    message: '文件上传成功',
+                    type: "success",
+                    duration: 3 * 1000,
+                });
+            });
             return;
         }
-        const handleBeforeUpload = (file,id) => {
-            console.log('file,id')
-            console.log(file,id)
-        }
+        
         const handleSuccess = () => {
 
         }
@@ -129,6 +136,11 @@ export default {
         const beforeUpload = (file) => {
             if(filePath.value == undefined || filePath.value == '' || filePath.value ==null){
                 console.log('.value')
+                Message({
+                    message: '请选择文件上传目录',
+                    type: "error",
+                    duration: 5 * 1000,
+                });
                 return false;
             }
             console.log('true')
@@ -139,7 +151,6 @@ export default {
             actionUrl,
             fileList,
             uploadFile,
-            handleBeforeUpload,
             handleSuccess,
             handleError,
             onUploadChange,

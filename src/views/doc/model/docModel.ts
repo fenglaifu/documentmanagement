@@ -144,5 +144,15 @@ export function DocModelData() {
         });
     }
 
-    return {state, getAllDataList, getPageDataList, getDirPathDataList, download, uploadMulti, uploadSingle, baseURL, getAllDirTreeList}
+    const previewFile = (id: number) => {
+        let url = `/preview/${id}`;
+        return request({
+            url: url,
+            method: "get",
+            responseType:'arraybuffer'
+        })
+        ;
+    }
+
+    return {state, getAllDataList, getPageDataList, getDirPathDataList, download, uploadMulti, uploadSingle, baseURL, getAllDirTreeList, previewFile}
 }

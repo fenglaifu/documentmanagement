@@ -12,7 +12,7 @@
 <script>
 import Word from '../../components/Word.vue';
 import { useRouter, useRoute } from "vue-router";
-import { toRefs, watchEffect } from "vue";
+import { ref, toRefs, watchEffect } from "vue";
 import { DocModelData } from './model/docModel';
 import store from "../../store";
 export default {
@@ -21,14 +21,31 @@ export default {
         Word
     },
     setup(){
-        const {state, getPageDataList, getAllDataList, download} = DocModelData();
+        const {state, download} = DocModelData();
         const router = useRouter();
         const route = useRoute();
+        let id = route.params.id;
         let selectedFileData = store.state.selectedFileData;
+        let fileName = ref(null)
+        const findDataById = (dirFileDataAllList) => {
+            if(dirFileDataAllList){
+                dirFileDataAllList.forEach((item, idx) => {
+                    console.log('findDataById')
+                    if(item.id == id){
+                        fileName.value = item.fileName;
+                        selectedFileData = item;
+                        return;
+                    }
+                    if(item.children && item.children.length > 0){
+                        findDataById(item.children);
+                    }
+                })
+            }
+        }
         watchEffect(() => {
-            console.log('watchEffect')
-            selectedFileData = store.state.selectedFileData;
-            console.log(selectedFileData.fileName)
+            let dirFileDataList = store.state.dirFileDataList;
+            console.log('watchEffect findDataById')
+            findDataById(dirFileDataList);
         })
 
         const downloadFile = () => {
@@ -40,6 +57,7 @@ export default {
             download, 
             router,
             ...toRefs(selectedFileData),
+            fileName,
             downloadFile
         }
     }
